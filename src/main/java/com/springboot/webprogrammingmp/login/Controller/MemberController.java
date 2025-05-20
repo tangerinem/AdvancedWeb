@@ -20,7 +20,7 @@ public class MemberController {
 
     @GetMapping("/refri/signup")
     public String joinMember() {
-        return "signup";
+        return "/login/signup";
     }
 
     @PostMapping("/refri/save")
@@ -32,7 +32,7 @@ public class MemberController {
 
     @GetMapping("/refri/login")
     public String login() {
-        return "login";
+        return "/login/login";
     }
 
     @PostMapping("/refri/join")
@@ -42,7 +42,7 @@ public class MemberController {
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
             if (member.getPw().equals(password)) {
-                return "main";
+                return "/login/main";
             } else {
                 rttr.addFlashAttribute("loginError", "비밀번호가 일치하지 않습니다.");
 
