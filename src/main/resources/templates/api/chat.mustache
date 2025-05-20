@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini 챗봇</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .chat-container { max-width: 600px; margin: 0 auto; border: 1px solid #ccc; padding: 15px; border-radius: 5px; }
+        .user-message, .bot-message { padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+        .user-message { background-color: #e0f7fa; text-align: right; }
+        .bot-message { background-color: #f0f4c3; }
+        .input-area { display: flex; margin-top: 15px; }
+        .input-area input[type="text"] { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px 0 0 5px; }
+        .input-area button { padding: 10px 15px; border: 1px solid #ccc; border-radius: 0 5px 5px 0; background-color: #4caf50; color: white; cursor: pointer; }
+        #chat-log { margin-bottom: 15px; overflow-y: auto; max-height: 300px; border: 1px solid #eee; padding: 10px; background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <h1>Gemini 챗봇</h1>
+    <div id="chat-log">
+        {{#chatHistory}}
+            <div class="{{sender}}-message">{{message}}</div>
+        {{/chatHistory}}
+    </div>
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="질문을 입력하세요...">
+        <button onclick="sendMessage()">보내기</button>
+    </div>
+</div>
+
+<script>
+    function sendMessage() {
+        const userInput = document.getElementById("user-input").value;
+        if (userInput.trim() !== "") {
+            // 서버로 사용자 메시지를 보내고 Gemini 응답을 받도록 요청
+            fetch('/chat', { // 서버의 챗봇 엔드포인트 URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'message=' + encodeURIComponent(userInput)
+            })
+                    .then(response => response.json()) // 서버에서 JSON 형태로 응답
+                    .then(data => {
+                        if (data.response) {
+                            const chatLog = document.getElementById("chat-log");
+                            chatLog.innerHTML += `<div class="user-message">${userInput}</div>`;
+                            chatLog.innerHTML += `<div class="bot-message">${data.response}</div>`;
+                            document.getElementById("user-input").value = ""; // 입력 필드 초기화
+                            chatLog.scrollTop = chatLog.scrollHeight; // 스크롤을 최하단으로 이동
+                        } else if (data.error) {
+                            alert('오류 발생: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('네트워크 오류:', error);
+                        alert('네트워크 오류가 발생했습니다.');
+                    });
+        }
+    }
+
+    // 페이지 로딩 시 이전 채팅 기록을 보여주기 위해 (선택 사항)
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatLog = document.getElementById("chat-log");
+        chatLog.scrollTop = chatLog.scrollHeight;
+    });
+</script>
+</body>
+</html>
