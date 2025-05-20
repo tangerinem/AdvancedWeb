@@ -1,0 +1,28 @@
+{{>Layouts/header}}
+{{#ingredient}}
+<form class="container" action="/refrigerator/ingredients/update" method="post">
+    <input type="hidden" name="id" value={{id}}>
+    <div class="mb-3">
+        <label class="form-label" for="ingredientName">재료명</label>
+        <input class="form-control" id="ingredientName" name="ingredientName" value={{ingredientName}} required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="quantity">개수</label>
+        <input class="form-control" id="quantity" name="quantity" placeholder="숫자만 입력" value={{quantity}} required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="date">구입일</label>
+        <input class="form-control" id="date" name="date" placeholder="YY-MM-DD" value={{date}} required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="expiryDate">유통기한</label>
+        <input class="form-control" id="expiryDate" name="expiryDate" placeholder="YY-MM-DD" value={{expiryDate}} required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="memo">메모</label>
+        <textarea class="form-control" id="memo" name="memo">{{memo}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">수정</button>
+</form>
+{{/ingredient}}
+{{>Layouts/footer}}

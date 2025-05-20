@@ -1,0 +1,25 @@
+{{>layouts/header}}
+<div>
+    <a href="ingredients?sort=expiryDate" class="btn btn-primary">유통기한 순</a>
+    <a href="ingredients?sort=latest" class="btn btn-primary">최신순</a>
+</div>
+
+<table class="table">
+    <thead>
+    <th scope="col">재료명</th><th scope="col">개수</th><th scope="col">구입일</th><th scope="col">유통기한</th><th scope="col">메모</th>
+    </thead>
+    <tbody>
+    {{#ingredientList}}
+        <tr>
+            <th>{{ingredientName}}</th><td>{{quantity}}</td><td>{{date}}</td><td>{{expiryDate}}</td><td>{{memo}}</td>
+            <td><a href="/refrigerator/ingredient/{{id}}/edit" class="btn btn-primary">수정</a></td>
+            <td><a href="/refrigerator/ingredient/{{id}}/delete" class="btn btn-primary" onclick="return confirm('삭제하시겠습니까?')">삭제</a></td>
+        </tr>
+    {{/ingredientList}}
+    </tbody>
+</table>
+<a href="/refrigerator/ingredients/add" class="btn btn-primary">재료 추가</a>
+<script>
+
+</script>
+{{>layouts/footer}}
