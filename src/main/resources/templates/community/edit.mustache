@@ -1,0 +1,24 @@
+{{>layouts/header}}
+
+<form class="container" action="/articles/update" method="post">
+    {{#article}}
+    <!--id값 hidden으로 전송-->
+            <input type="hidden" name="id" value="{{id}}">
+
+    <div class="mb-3">
+        <label class="form-label" for="title">제목</label>
+        <!--수정할 title 값 넣기-->
+        <input class=form-control" name="title" value={{title}}>
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="content">내용</label>
+        <!--수정한 content 값 넣기-->
+        <textarea class="form-control" name="content">{{content}}</textarea>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/articles/{{id}}">Back</a>
+</form>
+    {{/article}}
+{{>layouts/footer}}

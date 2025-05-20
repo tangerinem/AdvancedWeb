@@ -1,0 +1,23 @@
+{{>layouts/header}}
+<table class="table">
+    <thead>
+        <tr><th>Id</th><th>Title</th><th>Content</th></tr>
+    </thead>
+    <tbody>
+        {{#article}}
+            <tr><td>{{id}}</td><td>{{title}}</td><td>{{content}}</td></tr>
+        {{/article}}
+    </tbody>
+</table>
+
+<!--수정 링크-->
+<a href="{{article.id}}/edit" class="btn btn-primary"> 수정하기 </a>
+
+<!-- 삭제 -->
+<a href="/articles/{{article.id}}/delete" class="btn btn-primary">삭제하기</a>
+
+<!--목록 페이지-->
+<a href="/articles">목록 페이지</a>
+
+
+{{>layouts/footer}}
