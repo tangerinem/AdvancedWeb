@@ -1,0 +1,24 @@
+{{>layouts/header}}
+<table class="table">
+    <thead>
+    <tr><th>Id</th><th>Title</th><th>Content</th></tr>
+    </thead>
+    <tbody>
+
+    <!--상세 보기 링크  (제목에 링크걸기)ㄴ-->
+    <!-- <a href="/articles/1">제목</a> -->
+    {{#articles}}
+        <tr>
+            <th>{{id}}</th>
+            <td><a href="/articles/{{id}}">{{title}}</a> </td>
+            <td>{{content}}</td>
+        </tr>
+
+    {{/articles}}
+    </tbody>
+</table>
+
+<!-- 입력페이지 링크 -->
+<a href="/articles/new"> 새 글 쓰기</a>
+
+{{>layouts/footer}}
