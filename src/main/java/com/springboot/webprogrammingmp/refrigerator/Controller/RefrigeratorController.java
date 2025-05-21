@@ -1,8 +1,8 @@
-package com.springboot.webprogrammingmp.Controller;
+package com.springboot.webprogrammingmp.refrigerator.Controller;
 
-import com.springboot.webprogrammingmp.DTO.IngredientForm;
-import com.springboot.webprogrammingmp.Entity.Ingredient;
-import com.springboot.webprogrammingmp.Repository.IngredientRepository;
+import com.springboot.webprogrammingmp.refrigerator.DTO.IngredientForm;
+import com.springboot.webprogrammingmp.refrigerator.Entity.Ingredient;
+import com.springboot.webprogrammingmp.refrigerator.Repository.IngredientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

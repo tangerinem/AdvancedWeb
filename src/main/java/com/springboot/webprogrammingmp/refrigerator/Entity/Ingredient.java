@@ -1,4 +1,4 @@
-package com.springboot.webprogrammingmp.Entity;
+package com.springboot.webprogrammingmp.refrigerator.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +27,8 @@ public class Ingredient {
         this.createdAt = LocalDateTime.now();
     }
 
+
+
     public Ingredient(String ingredientName, int quantity, String date, String expiryDate, String memo) {
         this.ingredientName = ingredientName;
         this.quantity = quantity;
@@ -38,4 +40,6 @@ public class Ingredient {
     public void logInfo(){
         log.info("id: {}, ingredientName: {}, quantity: {}, date: {}, expiryDate: {}, memo: {}", id, ingredientName, quantity, date, expiryDate, memo);
     }
+
+
 }

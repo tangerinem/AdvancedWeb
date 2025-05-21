@@ -1,6 +1,6 @@
-package com.springboot.webprogrammingmp.DTO;
+package com.springboot.webprogrammingmp.refrigerator.DTO;
 
-import com.springboot.webprogrammingmp.Entity.Ingredient;
+import com.springboot.webprogrammingmp.refrigerator.Entity.Ingredient;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 

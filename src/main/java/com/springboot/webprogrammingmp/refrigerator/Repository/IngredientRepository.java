@@ -1,6 +1,6 @@
-package com.springboot.webprogrammingmp.Repository;
+package com.springboot.webprogrammingmp.refrigerator.Repository;
 
-import com.springboot.webprogrammingmp.Entity.Ingredient;
+import com.springboot.webprogrammingmp.refrigerator.Entity.Ingredient;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

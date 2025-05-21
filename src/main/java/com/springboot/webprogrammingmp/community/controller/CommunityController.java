@@ -4,13 +4,13 @@ import com.springboot.webprogrammingmp.community.dto.CommunityForm;
 import com.springboot.webprogrammingmp.community.entity.Community;
 import com.springboot.webprogrammingmp.community.repository.CommunityRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/v1")
+@Controller
 public class CommunityController {
 
     private final CommunityRepository communityRepository;
@@ -23,20 +23,27 @@ public class CommunityController {
     @GetMapping("/community")
     public String viewAll(Model model){
         List<Community> communityList = communityRepository.findAll();
-        model.addAttribute("contents", communityList);
-        return "/community/view";
+        model.addAttribute("community", communityList);
+        return "community/index";
     }
 
     /* 커뮤니티 새 글 생성*/
+    @GetMapping("/community/new")
+    public String createNewPost() {
+        return "community/new";
+    }
     @PostMapping("/community/create")
-    public Community newPost(@RequestBody CommunityForm communityForm){
-        Community community = communityForm.toEntity();
-        Community saved = communityRepository.save(community);
-        return saved;
+    public String newPost(@ModelAttribute CommunityForm form) {
+        Community community = form.toEntity();
+        communityRepository.save(community);
+        return "redirect:/community";
     }
 
+
+
+
     /* 커뮤니티 글 수정 페이지 */
-    @GetMapping("/community/edit/{id}/")
+    @GetMapping("/community/edit/{id}")
     public String editPost(@PathVariable("id")Long id, Model model) {
         Community community = communityRepository.findById(id).orElse(null);
         model.addAttribute("community", community);
@@ -44,7 +51,7 @@ public class CommunityController {
     }
 
     /* 글 수정 */
-    @PutMapping("/community/edit/{id}")
+    @PostMapping("/community/edit/{id}")
     public String updatePost(@PathVariable("id") Long id, @ModelAttribute Community updatedCommunity){
         Community target = communityRepository.findById(id).orElse(null);
 
@@ -61,7 +68,7 @@ public class CommunityController {
     public ResponseEntity<Community> deletePost(@PathVariable Long id){
         Community target = communityRepository.findById(id).orElse(null);
         if (target == null) {
-            return ResponseEntity.notFound().build();  // 404
+            return ResponseEntity.notFound().build();
         }
         communityRepository.deleteById(id);
         return ResponseEntity.ok(null);

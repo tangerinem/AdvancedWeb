@@ -1,23 +1,32 @@
 {{>layouts/header}}
-<table class="table">
-    <thead>
-        <tr><th>Id</th><th>Title</th><th>Content</th></tr>
-    </thead>
-    <tbody>
-        {{#article}}
-            <tr><td>{{id}}</td><td>{{title}}</td><td>{{content}}</td></tr>
-        {{/article}}
-    </tbody>
-</table>
+<!--<table class="table">-->
+<!--    <thead>-->
+<!--        <tr><th>Id</th><th>Title</th><th>Content</th></tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--        {{#community}}-->
+<!--            <tr><td>{{id}}</td><td>{{title}}</td><td>{{content}}</td></tr>-->
+<!--        {{/community}}-->
+<!--    </tbody>-->
+<!--</table>-->
 
-<!--수정 링크-->
-<a href="{{article.id}}/edit" class="btn btn-primary"> 수정하기 </a>
+<!--&lt;!&ndash;수정 링크&ndash;&gt;-->
+<!--<a href="/edit/{{id}}" class="btn btn-primary"> 수정하기 </a>-->
 
-<!-- 삭제 -->
-<a href="/articles/{{article.id}}/delete" class="btn btn-primary">삭제하기</a>
+<!--&lt;!&ndash; 삭제 &ndash;&gt;-->
+<!--<a href="/delete/{{id}}" class="btn btn-primary">삭제하기</a>-->
 
-<!--목록 페이지-->
-<a href="/articles">목록 페이지</a>
+<!--&lt;!&ndash;목록 페이지&ndash;&gt;-->
+<!--<a href="/community">목록 페이지</a>-->
+
+
+
+<h1>{{community.title}}</h1>
+<p>{{community.content}}</p>
+
+<a href="/community/edit/{{id}}" class="btn btn-primary">수정하기</a>
+<a href="/community/delete/{{id}}" class="btn btn-danger">삭제하기</a>
+<a href="/community" class="btn btn-secondary">목록으로</a>
 
 
 {{>layouts/footer}}
