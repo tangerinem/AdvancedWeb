@@ -12,7 +12,9 @@
         .bot-message { background-color: #f0f4c3; }
         .input-area { display: flex; margin-top: 15px; }
         .input-area input[type="text"] { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px 0 0 5px; }
+        .input-area2 input[type="text"] { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px 0 0 5px; }
         .input-area button { padding: 10px 15px; border: 1px solid #ccc; border-radius: 0 5px 5px 0; background-color: #4caf50; color: white; cursor: pointer; }
+        .input-area2 button { padding: 10px 15px; border: 1px solid #ccc; border-radius: 0 5px 5px 0; background-color: #FF894E; color: white; cursor: pointer; }
         #chat-log { margin-bottom: 15px; overflow-y: auto; max-height: 300px; border: 1px solid #eee; padding: 10px; background-color: #f9f9f9; }
     </style>
 </head>
@@ -21,12 +23,20 @@
     <h1>Gemini 챗봇</h1>
     <div id="chat-log">
         {{#chatHistory}}
-            <div class="{{sender}}-message">{{message}}</div>
+            <div class="{{sender}}-message">{{{message}}}</div>
         {{/chatHistory}}
     </div>
     <div class="input-area">
         <input type="text" id="user-input" placeholder="질문을 입력하세요...">
         <button onclick="sendMessage()">보내기</button>
+    </div>
+
+    <!-- 레시피 추천 -->
+    <div class = "input-area2">
+    <form action="/chat/recipe" method="post" style="margin-top: 10px;">
+        <input type="text" id="user-input" name="ingredients" placeholder="예: 감자, 계란, 치즈">
+        <button type="submit">빠른 레시피 추천</button>
+    </form>
     </div>
 </div>
 
