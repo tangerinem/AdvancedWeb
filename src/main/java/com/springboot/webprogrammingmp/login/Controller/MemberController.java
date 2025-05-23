@@ -42,7 +42,7 @@ public class MemberController {
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
             if (member.getPw().equals(password)) {
-                return "/login/main";
+                return "redirect:/refrigerator/ingredients";
             } else {
                 rttr.addFlashAttribute("loginError", "비밀번호가 일치하지 않습니다.");
 
