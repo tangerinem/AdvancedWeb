@@ -89,6 +89,35 @@
         .input-wrapper button:hover {
           background-color: #222;
         }
+
+        .input-wrapper2 {
+            display: flex;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .input-wrapper2 input[type="text"] {
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px 0 0 8px;
+            background-color: #fff;
+        }
+
+        .input-wrapper2 button {
+            padding: 12px 18px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 0 8px 8px 0;
+            background-color: #57C44F;
+            color: white;
+            cursor: pointer;
+        }
+
+        .input-wrapper2 button:hover {
+            background-color: #222;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +125,7 @@
     <div class="chat-inner">
         <div class="message-box" id="chat-log">
             {{#chatHistory}}
-                <div class="{{sender}}-message">{{message}}</div>
+                <div class="{{sender}}-message">{{{message}}}</div>
             {{/chatHistory}}
         </div>
     </div>
@@ -107,6 +136,19 @@
             <button onclick="sendMessage()">전송</button>
         </div>
     </div>
+
+
+    <!-- 빠른 레시피 추천 -->
+    <div class="input-area">
+        <form action="/chat/recipe" method="post" style="width: 100%; max-width: 800px;">
+            <div class="input-wrapper2">
+                <input type="text" id="prompt-input" name="ingredients" placeholder="예: 감자, 계란, 치즈" />
+                <button type="submit">빠른 레시피 추천</button>
+            </div>
+        </form>
+    </div>
+
+
 </div>
 
 <script>
