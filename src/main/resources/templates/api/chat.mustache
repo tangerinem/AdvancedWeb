@@ -1,70 +1,147 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini 챗봇</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>레시피 추천 받기</title>
     <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .chat-container { max-width: 600px; margin: 0 auto; border: 1px solid #ccc; padding: 15px; border-radius: 5px; }
-        .user-message, .bot-message { padding: 10px; margin-bottom: 10px; border-radius: 5px; }
-        .user-message { background-color: #e0f7fa; text-align: right; }
-        .bot-message { background-color: #f0f4c3; }
-        .input-area { display: flex; margin-top: 15px; }
-        .input-area input[type="text"] { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px 0 0 5px; }
-        .input-area button { padding: 10px 15px; border: 1px solid #ccc; border-radius: 0 5px 5px 0; background-color: #4caf50; color: white; cursor: pointer; }
-        #chat-log { margin-bottom: 15px; overflow-y: auto; max-height: 300px; border: 1px solid #eee; padding: 10px; background-color: #f9f9f9; }
+        html, body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          font-family: sans-serif;
+          background-color: #f5f5f5;
+        }
+
+        .chat-container {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .chat-inner {
+          flex-grow: 1;
+          display: flex;
+          justify-content: center;
+          overflow-y: auto;
+        }
+
+        .message-box {
+          width: 100%;
+          max-width: 800px;
+          padding: 50px 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+        }
+
+        .user-message, .bot-message {
+          padding: 14px 18px;
+          border-radius: 16px;
+          max-width: 80%;
+          word-break: break-word;
+        }
+
+        .user-message {
+          align-self: flex-end;
+          background-color: #FFB18A;
+        }
+
+        .bot-message {
+          align-self: flex-start;
+          background-color: #ffffff;
+          border: 1px solid #ddd;
+        }
+
+        .input-area {
+          display: flex;
+          justify-content: center;
+          padding: 12px 16px;
+          border-top: 1px solid #ccc;
+          background-color: #fafafa;
+        }
+
+        .input-wrapper {
+          display: flex;
+          width: 100%;
+          max-width: 800px;
+        }
+
+        .input-wrapper input[type="text"] {
+          flex-grow: 1;
+          padding: 12px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 8px 0 0 8px;
+          background-color: #fff;
+        }
+
+        .input-wrapper button {
+          padding: 12px 18px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 0 8px 8px 0;
+          background-color: #FF894E;
+          color: white;
+          cursor: pointer;
+        }
+
+        .input-wrapper button:hover {
+          background-color: #222;
+        }
     </style>
 </head>
 <body>
 <div class="chat-container">
-    <h1>Gemini 챗봇</h1>
-    <div id="chat-log">
-        {{#chatHistory}}
-            <div class="{{sender}}-message">{{message}}</div>
-        {{/chatHistory}}
+    <div class="chat-inner">
+        <div class="message-box" id="chat-log">
+            {{#chatHistory}}
+                <div class="{{sender}}-message">{{message}}</div>
+            {{/chatHistory}}
+        </div>
     </div>
+
     <div class="input-area">
-        <input type="text" id="user-input" placeholder="질문을 입력하세요...">
-        <button onclick="sendMessage()">보내기</button>
+        <div class="input-wrapper">
+            <input type="text" id="user-input" placeholder="메시지를 입력하세요.." />
+            <button onclick="sendMessage()">전송</button>
+        </div>
     </div>
 </div>
 
 <script>
     function sendMessage() {
-        const userInput = document.getElementById("user-input").value;
-        if (userInput.trim() !== "") {
-            // 서버로 사용자 메시지를 보내고 Gemini 응답을 받도록 요청
-            fetch('/chat', { // 서버의 챗봇 엔드포인트 URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'message=' + encodeURIComponent(userInput)
-            })
-                    .then(response => response.json()) // 서버에서 JSON 형태로 응답
-                    .then(data => {
-                        if (data.response) {
-                            const chatLog = document.getElementById("chat-log");
-                            chatLog.innerHTML += `<div class="user-message">${userInput}</div>`;
-                            chatLog.innerHTML += `<div class="bot-message">${data.response}</div>`;
-                            document.getElementById("user-input").value = ""; // 입력 필드 초기화
-                            chatLog.scrollTop = chatLog.scrollHeight; // 스크롤을 최하단으로 이동
-                        } else if (data.error) {
-                            alert('오류 발생: ' + data.error);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('네트워크 오류:', error);
-                        alert('네트워크 오류가 발생했습니다.');
-                    });
-        }
+      const userInput = document.getElementById("user-input").value;
+      if (userInput.trim() !== "") {
+        fetch("/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: "message=" + encodeURIComponent(userInput),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.response) {
+              const chatLog = document.getElementById("chat-log");
+              chatLog.innerHTML += `<div class="user-message">${userInput}</div>`;
+              chatLog.innerHTML += `<div class="bot-message">${data.response}</div>`;
+              document.getElementById("user-input").value = "";
+              chatLog.scrollTop = chatLog.scrollHeight;
+            } else if (data.error) {
+              alert("오류 발생: " + data.error);
+            }
+          })
+          .catch((error) => {
+            console.error("네트워크 오류:", error);
+            alert("네트워크 오류가 발생했습니다.");
+          });
+      }
     }
 
-    // 페이지 로딩 시 이전 채팅 기록을 보여주기 위해 (선택 사항)
-    document.addEventListener('DOMContentLoaded', function() {
-        const chatLog = document.getElementById("chat-log");
-        chatLog.scrollTop = chatLog.scrollHeight;
+    document.addEventListener("DOMContentLoaded", function () {
+      const chatLog = document.getElementById("chat-log");
+      chatLog.scrollTop = chatLog.scrollHeight;
     });
 </script>
 </body>
