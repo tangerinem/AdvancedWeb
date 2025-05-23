@@ -57,15 +57,29 @@
     </style>
 </head>
 <body>
+
 <div class="login-container">
+    {{#loginError}}
+        <div style="
+    background-color: #ffe6e6;
+    border: 1px solid #ffcccc;
+    color: #cc0000;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+">
+            {{loginError}}
+        </div>
+    {{/loginError}}
     <h1>냉장고를 부탁해</h1>
-    <form action="/login" method="post">
+    <form action="/refri/join" method="post">
         <input type="email" name="email" placeholder="이메일" required>
         <input type="password" name="password" placeholder="비밀번호" required>
         <button type="submit">로그인</button>
     </form>
-    < class="signup">
-        아직 회원이 아니신가요? <a href="/signup">회원가입</a>
+    <div class="signup">
+        아직 회원이 아니신가요? <a href="/refri/signup">회원가입</a>
     </div>
 </div>
 </body>

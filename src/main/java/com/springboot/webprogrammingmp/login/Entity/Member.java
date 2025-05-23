@@ -20,10 +20,11 @@ public class Member {
         this.id = id;
         this.email = email;
         this.pw = pw;
+
     }
-    public Member(String email, String pw){
-        this.email = email;
-        this.pw = pw;
-    }
+//    public Member(String email, String pw){
+//        this.email = email;
+//        this.pw = pw;
+//    }
 
 }

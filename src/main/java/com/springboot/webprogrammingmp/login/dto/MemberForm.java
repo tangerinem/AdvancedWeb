@@ -25,7 +25,4 @@ public class MemberForm {
     public Member toEntity(){
         return new Member(id, email, password);
     }
-    public Member toEntityForSignup(){
-        return new Member(email, password);
-    }
 }
