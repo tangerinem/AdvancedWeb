@@ -1,21 +1,72 @@
-{{>layouts/header}}
-{{#loginError}}
-    <div class="alert alert-danger" role="alert">
-        {{loginError}}
-    </div>
-{{/loginError}}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 - 서비스명</title>
+    <style>
+        body {
+            background-color: #d9d9d9;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-<form class="container" action="/refri/join" method="post">
+        .login-container {
+            background-color: #f2f2f2;
+            padding: 80px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
 
-    <div class="mb-3">
-        <label class="form-label">이메일</label>
-        <input type="email" class="form-control" name="email">
+        .login-container h1 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .login-container input {
+            display: block;
+            width: 88%;
+            padding: 18px;
+            margin-bottom: 20px;
+            border: none;
+            background-color: #d9d9d9;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 18px;
+            background-color: #d9d9d9;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .signup {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        .signup a {
+            font-weight: bold;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1>냉장고를 부탁해</h1>
+    <form action="/login" method="post">
+        <input type="email" name="email" placeholder="이메일" required>
+        <input type="password" name="password" placeholder="비밀번호" required>
+        <button type="submit">로그인</button>
+    </form>
+    < class="signup">
+        아직 회원이 아니신가요? <a href="/signup">회원가입</a>
     </div>
-    <div class="mb-3">
-        <label class="form-label">비밀번호</label>
-        <input type="password" class="form-control" name="password" />
-    </div>
-    <button type="submit" class="btn btn-primary">로그인</button>
-    <a href="/refri/signup">회원가입</a>
-</form>
-{{>layouts/footer}}
+</div>
+</body>
+</html>
