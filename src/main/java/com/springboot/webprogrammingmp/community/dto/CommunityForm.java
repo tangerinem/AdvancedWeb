@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,13 +17,14 @@ public class CommunityForm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String date;
+    private LocalDate date;
     private String title;
     private String comment;
     private String content;
+    private String query;
 
     public Community toEntity(){
-        return new Community(null, this.date, this.title, this.comment, this.content);
+        return new Community(null, this.date, this.title, this.comment, this.content, this.query);
     }
 
 }

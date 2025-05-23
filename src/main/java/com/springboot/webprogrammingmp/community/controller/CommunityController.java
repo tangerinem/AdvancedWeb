@@ -3,14 +3,17 @@ package com.springboot.webprogrammingmp.community.controller;
 import com.springboot.webprogrammingmp.community.dto.CommunityForm;
 import com.springboot.webprogrammingmp.community.entity.Community;
 import com.springboot.webprogrammingmp.community.repository.CommunityRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class CommunityController {
 
     private final CommunityRepository communityRepository;
@@ -24,6 +27,8 @@ public class CommunityController {
     public String viewAll(Model model){
         List<Community> communityList = communityRepository.findAll();
         model.addAttribute("community", communityList);
+
+        System.out.println(communityList);
         return "community/index";
     }
 
@@ -32,14 +37,14 @@ public class CommunityController {
     public String createNewPost() {
         return "community/new";
     }
+
     @PostMapping("/community/create")
     public String newPost(@ModelAttribute CommunityForm form) {
         Community community = form.toEntity();
+        community.setDate(LocalDate.now());
         communityRepository.save(community);
         return "redirect:/community";
     }
-
-
 
 
     /* 커뮤니티 글 수정 페이지 */
@@ -64,14 +69,13 @@ public class CommunityController {
 
 
     /* 글 삭제 */
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Community> deletePost(@PathVariable Long id){
+    @PostMapping("/community/delete/{id}")
+    public String deletePost(@PathVariable Long id){
         Community target = communityRepository.findById(id).orElse(null);
-        if (target == null) {
-            return ResponseEntity.notFound().build();
+        if (target != null) {
+            communityRepository.deleteById(id);
         }
-        communityRepository.deleteById(id);
-        return ResponseEntity.ok(null);
+        return "redirect:/community";
     }
 
     /* 글 상세 보기 */
@@ -81,6 +85,13 @@ public class CommunityController {
         model.addAttribute("community", communityEntity);
 
         return "community/show";
+    }
+
+    @GetMapping("/community/search")
+    public String searchPost(@RequestParam("query") String query, Model model){
+        List<Community> result = communityRepository.findByTitleContaining(query);
+        model.addAttribute("community", result);
+        return "community/index";
     }
 
 }

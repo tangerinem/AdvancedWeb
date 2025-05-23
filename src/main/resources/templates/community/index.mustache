@@ -1,24 +1,60 @@
 {{>layouts/header}}
-<table class="table">
-    <thead>
-    <tr><th>Id</th><th>Title</th><th>Content</th></tr>
-    </thead>
-    <tbody>
+<head>
+    <link rel="stylesheet" href="/css/community.css">
+</head>
+<section class="notice">
+    <!-- 제목 영역 -->
+    <div class="page-title">
+        <div class="container">
+            <h3>커뮤니티</h3>
+        </div>
+    </div>
 
-    <!--상세 보기 링크  (제목에 링크걸기)ㄴ-->
-    <!-- <a href="/articles/1">제목</a> -->
-    {{#community}}
-        <tr>
-            <th>{{id}}</th>
-            <td><a href="/community/{{id}}">{{title}}</a> </td>
-            <td>{{content}}</td>
-        </tr>
+    <!-- 검색창 -->
+    <div id="board-search">
+        <div class="container">
+            <div class="search-window">
+                <form action="/community/search" method="get">
+                    <div class="search-wrap">
+                        <label for="search" class="blind">게시글 검색</label>
+                        <input id="search" type="search" name="query" placeholder="검색어를 입력해주세요.">
+                        <button type="submit" class="btn btn-dark">검색</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    {{/community}}
-    </tbody>
-</table>
+    <!-- 게시글 테이블 -->
+    <div id="board-list">
+        <div class="container">
+            <table class="board-table">
+                <thead>
+                <tr>
+                    <th class="th-id">번호</th>
+                    <th class="th-title">제목</th>
+                    <th class="th-content">날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#community}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <th>
+                            <a href="/community/{{id}}">{{title}}</a>
+                        </th>
+                        <td>{{date}}</td>
+                    </tr>
+                {{/community}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<!-- 입력페이지 링크 -->
-<a href="/community/new"> 새 글 쓰기</a>
+    <!-- 글쓰기 버튼 -->
+    <div class="container mt-3 text-end">
+        <a href="/community/new" class="btn btn-dark">새 글 쓰기</a>
+    </div>
+</section>
 
 {{>layouts/footer}}

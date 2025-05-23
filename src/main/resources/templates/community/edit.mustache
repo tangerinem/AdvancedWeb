@@ -1,4 +1,6 @@
 {{>layouts/header}}
+<link rel="stylesheet" href="/css/edit.css">
+
 
 <form class="container" action="/community/edit/{{community.id}}" method="post">
     {{#community}}
@@ -6,19 +8,19 @@
             <input type="hidden" name="id" value="{{id}}">
 
     <div class="mb-3">
-        <label class="form-label" for="title">제목</label>
+        <label class="form-label" for="title">제목 수정</label>
         <!--수정할 title 값 넣기-->
         <input class="form-control" name="title" value={{title}}>
 
     </div>
     <div class="mb-3">
-        <label class="form-label" for="content">내용</label>
+        <label class="form-label" for="content">내용 수정</label>
         <!--수정한 content 값 넣기-->
         <textarea class="form-control" name="content">{{content}}</textarea>
 
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="/community/{{community.id}}">Back</a>
-</form>
+    <button type="submit" class="btn btn-primary">수정하기</button>
+    <a href="/community" class="btn btn-backList">돌아가기</a>
+        </form>
     {{/community}}
 {{>layouts/footer}}
