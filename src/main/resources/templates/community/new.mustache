@@ -1,17 +1,18 @@
 {{>layouts/header}}
+<link rel="stylesheet" href="/css/new.css">
 
 <form class="container" action="/community/create" method="post">
     <div class="mb-3">
-        <label class="form-label" for="title">제목</label>
-        <input class="form-control" id="title" name="title" required/>
+        <label class="form-label"  for="title">제목</label>
+        <input class="form-control" placeholder="제목을 입력해주세요." id="title" name="title" required/>
     </div>
     <div class="mb-3">
         <label class="form-label" for="content">내용</label>
-        <textarea class="form-control" id="content" name="content" rows="4" cols="50" required></textarea>
+        <textarea class="form-control" placeholder="내용을 입력해주세요." id="content" name="content" rows="4" cols="50" required></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">등록하기</button>
     <!--목록페이지 링크-->
-    <a href="/community"> 목록 페이지</a>
+    <a href="/community" class="btn btn-backList">돌아가기</a>
 
 </form>
 

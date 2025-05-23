@@ -1,32 +1,15 @@
 {{>layouts/header}}
-<!--<table class="table">-->
-<!--    <thead>-->
-<!--        <tr><th>Id</th><th>Title</th><th>Content</th></tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--        {{#community}}-->
-<!--            <tr><td>{{id}}</td><td>{{title}}</td><td>{{content}}</td></tr>-->
-<!--        {{/community}}-->
-<!--    </tbody>-->
-<!--</table>-->
+<link rel="stylesheet" href="/css/show.css">
 
-<!--&lt;!&ndash;수정 링크&ndash;&gt;-->
-<!--<a href="/edit/{{id}}" class="btn btn-primary"> 수정하기 </a>-->
-
-<!--&lt;!&ndash; 삭제 &ndash;&gt;-->
-<!--<a href="/delete/{{id}}" class="btn btn-primary">삭제하기</a>-->
-
-<!--&lt;!&ndash;목록 페이지&ndash;&gt;-->
-<!--<a href="/community">목록 페이지</a>-->
-
-
-
-<h1>{{community.title}}</h1>
+<h3>{{community.title}}</h3>
 <p>{{community.content}}</p>
 
-<a href="/community/edit/{{id}}" class="btn btn-primary">수정하기</a>
-<a href="/community/delete/{{id}}" class="btn btn-danger">삭제하기</a>
-<a href="/community" class="btn btn-secondary">목록으로</a>
-
+<div class="button-group-right">
+    <a href="/community/edit/{{id}}" class="btn btn-primary">수정하기</a>
+    <form action="/community/delete/{{id}}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">삭제하기</button>
+    </form>
+    <a href="/community" class="btn btn-secondary">목록으로</a>
+</div>
 
 {{>layouts/footer}}
