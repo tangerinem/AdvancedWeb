@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>냉장고 웹페이지</title>
+    <style>
+        :root {
+            --main-color-1: #FF894E;
+            --main-color-2: #FFB18A;
+            --sub-color-1: #57C44F;
+            --sub-color-2: #41A03A;
+            --text-color-dark: #333;
+            --text-color-light: #fff;
+            --border-color: #ccc;
+            --background-light: #f9f9f9;
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-light);
+            color: var(--text-color-dark);
+        }
+
+        .container {
+            display: flex;
+            padding: 30px;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .left-panel {
+            flex: 1;
+            padding: 20px;
+            background-color: var(--background-light);
+            border-radius: 8px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .right-panel {
+            flex: 2;
+            padding: 20px;
+            background-color: var(--background-light);
+            border-radius: 8px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Left Panel */
+        .left-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sort-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sort-button {
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: #fff;
+            color: var(--text-color-dark);
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            text-decoration: none;
+            font-size: 15px;
+            display: block;
+            text-align: center;
+            min-width: 50px;
+        }
+
+        .sort-button.active {
+            background-color: var(--main-color-1);
+            color: var(--text-color-light);
+            border-color: var(--main-color-1);
+        }
+
+        .add-ingredient-button {
+            background-color: var(--sub-color-1);
+            color: var(--text-color-light);
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            text-decoration: none;
+            font-size: 15px;
+            display: block;
+            text-align: center;
+            min-width: 50px;
+        }
+
+        .add-ingredient-button:hover {
+            background-color: var(--sub-color-2);
+            transform: translateY(-2px);
+        }
+
+
+        .ingredient-list-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-top: 20px;
+        }
+
+        .ingredient-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+        }
+
+        .ingredient-card h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: var(--main-color-1);
+        }
+
+        .ingredient-card p {
+            margin: 5px 0;
+            font-size: 0.95em;
+            color: var(--text-color-dark);
+        }
+
+        .ingredient-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .ingredient-actions .modify-button,
+        .ingredient-actions .delete-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            line-height: 1.2;
+            box-sizing: border-box;
+        }
+
+        .ingredient-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .ingredient-actions .modify-button {
+            background-color: var(--sub-color-1);
+            color: var(--text-color-light);
+        }
+
+        .ingredient-actions .modify-button:hover {
+            background-color: var(--sub-color-2);
+        }
+
+        .ingredient-actions .delete-button {
+            background-color: #e74c3c;
+            color: var(--text-color-light);
+        }
+
+        .ingredient-actions .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Right Panel */
+        .right-panel h3 {
+            font-size: 1.5em;
+            color: var(--main-color-1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .ingredient-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .ingredient-tag-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--main-color-2);
+            color: var(--text-color-dark);
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .ingredient-tag-button:hover {
+            background-color: var(--main-color-1);
+            color: var(--text-color-light);
+            transform: translateY(-2px);
+        }
+
+        #dynamic-content {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 200px;
+            border: 1px solid #eee;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1em;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+{{>Layouts/cheader}}
+
+<div class="container">
+    <div class="left-panel">
+        <div class="left-panel-header">
+            <h3>내 냉장고 재료</h3>
+            <div class="sort-buttons">
+                <a href="ingredients?sort=latest" class="sort-button active">최신순</a>
+                <a href="ingredients?sort=expiryDate" class="sort-button active">유통기한 순</a>
+                <a href="/refrigerator/ingredients/add" class="add-ingredient-button">재료 추가</a>
+            </div>
+        </div>
+
+        <div class="ingredient-list-container">
+            {{#ingredientList}}
+                <div class="ingredient-card">
+                    <h4>{{ingredientName}} <span style="float: right;">{{quantity}}개</span></h4> <p>구입일 : {{date}}</p>
+                    <p>유통기한 : {{expiryDate}}</p>
+                    <p>메모 : {{memo}}</p>
+                    <div class="ingredient-actions">
+                        <a href="/refrigerator/ingredient/{{id}}/edit" class="modify-button">수정</a>
+                        <a href="/refrigerator/ingredient/{{id}}/delete" class="delete-button" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+                    </div>
+                </div>
+            {{/ingredientList}}
+            {{^ingredientList}}
+                <p style="text-align: center; color: #888;">냉장고에 재료가 없습니다.</p>
+            {{/ingredientList}}
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <h3>냉장고 재료 기반 레시피 추천</h3>
+        <div class="ingredient-tags">
+            {{#ingredientList}}
+                <button class="ingredient-tag-button" data-ingredient-name="{{ingredientName}}">{{ingredientName}}</button>
+            {{/ingredientList}}
+            {{^ingredientList}}
+                <p style="text-align: center; width: 100%; color: #888;">추천할 재료가 없습니다.</p>
+            {{/ingredientList}}
+        </div>
+        <div id="dynamic-content">
+            재료명을 클릭하세요!
+        </div>
+    </div>
+</div>

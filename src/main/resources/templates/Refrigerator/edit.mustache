@@ -1,28 +1,142 @@
-{{>Layouts/header}}
-{{#ingredient}}
-<form class="container" action="/refrigerator/ingredients/update" method="post">
-    <input type="hidden" name="id" value={{id}}>
-    <div class="mb-3">
-        <label class="form-label" for="ingredientName">재료명</label>
-        <input class="form-control" id="ingredientName" name="ingredientName" value={{ingredientName}} required>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" for="quantity">개수</label>
-        <input class="form-control" id="quantity" name="quantity" placeholder="숫자만 입력" value={{quantity}} required>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" for="date">구입일</label>
-        <input class="form-control" id="date" name="date" placeholder="YY-MM-DD" value={{date}} required>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" for="expiryDate">유통기한</label>
-        <input class="form-control" id="expiryDate" name="expiryDate" placeholder="YY-MM-DD" value={{expiryDate}} required>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" for="memo">메모</label>
-        <textarea class="form-control" id="memo" name="memo">{{memo}}</textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">수정</button>
-</form>
-{{/ingredient}}
-{{>Layouts/footer}}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>냉장고 재료 수정</title>
+    <style>
+        :root {
+            --main-color-1: #FF894E;
+            --main-color-2: #FFB18A;
+            --sub-color-1: #57C44F;
+            --sub-color-2: #41A03A;
+            --text-color-dark: #333;
+            --text-color-light: #fff;
+            --border-color: #ccc;
+            --background-light: #f4f4f4;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-light);
+            color: var(--text-color-dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            box-sizing: border-box;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-color-dark);
+            font-size: 1.1em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--main-color-1);
+            box-shadow: 0 0 5px rgba(255, 137, 78, 0.4);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            max-height: 250px;
+            overflow-y: auto;
+            line-height: 1.5;
+            font-size: 1.1em;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 20px;
+            margin-top: 30px;
+        }
+
+        .action-button {
+            background-color: var(--sub-color-1);
+            color: var(--text-color-light);
+            padding: 11px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-button:hover {
+            background-color: var(--sub-color-2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+{{>Layouts/cheader}}
+<div class="container">
+    <h1 class="page-title">재료 수정</h1>
+    {{#ingredient}}
+        <form class="container" action="/refrigerator/ingredients/update" method="post">
+            <input type="hidden" name="id" value={{id}}>
+            <div class="form-group">
+                <label for="ingredientName">재료명</label>
+                <input type="text" id="ingredientName" name="ingredientName" value={{ingredientName}} required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">개수</label>
+                <input type="number" id="quantity" name="quantity" placeholder="숫자만 입력" value={{quantity}} required>
+            </div>
+            <div class="form-group">
+                <label for="date">구입일</label>
+                <input type="text" id="date" name="date" placeholder="YY-MM-DD" value={{date}} required>
+            </div>
+
+            <div class="form-group">
+                <label for="expiryDate">유통기한</label>
+                <input type="text" id="expiryDate" name="expiryDate" placeholder="YY-MM-DD" value={{expiryDate}} required>
+            </div>
+
+            <div class="form-group">
+                <label for="memo">메모</label>
+                <textarea id="memo" name="memo">{{memo}}</textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="action-button">수정</button>
+            </div>
+        </form>
+    {{/ingredient}}
+</div>
+</body>
+</html>

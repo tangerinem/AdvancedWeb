@@ -37,7 +37,7 @@ public class RefrigeratorController {
             ingredientList = ingredientRepository.findAllByOrderByCreatedAtDesc();
         }
         model.addAttribute("ingredientList", ingredientList);
-        return "Refrigerator/show";
+        return "Refrigerator/main";
     }
 
     @GetMapping("/ingredients/add")
