@@ -22,9 +22,5 @@ public class Member {
         this.pw = pw;
 
     }
-//    public Member(String email, String pw){
-//        this.email = email;
-//        this.pw = pw;
-//    }
 
 }

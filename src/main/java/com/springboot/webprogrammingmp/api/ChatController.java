@@ -17,7 +17,7 @@ public class ChatController {
     private final GeminiApiClient geminiApiClient; // Gemini API 클라이언트
     private final ChatService chatService;
 
-    // 이전 채팅 기록을 저장할 리스트 (임시)
+    // 이전 채팅 기록을 저장할 리스트
     private final List<Map<String, String>> chatHistory = new ArrayList<>();
 
     public ChatController(GeminiApiClient geminiApiClient, ChatService chatService) {
@@ -33,22 +33,19 @@ public class ChatController {
 
     @PostMapping("/chat")
     @ResponseBody
-    public Map<String, Object> handleChatMessage(@RequestParam String message) {
-        Map<String, Object> response = new HashMap<>();
-        chatHistory.add(Map.of("sender", "user", "message", message));
+    public String handleChatMessage(@RequestParam String message) {
         try {
-            System.out.println("Gemini API 호출 시작: " + message); // 로그 추가
-            Thread.sleep(2000); // 잠시 대기 (테스트 목적)
+            System.out.println("Gemini API 호출 시작: " + message);
+            Thread.sleep(2000); // 테스트용 대기
             String geminiResponse = geminiApiClient.generateText(message);
             geminiResponse = geminiResponse.replaceAll("\n", "<br>");
-            System.out.println("Gemini API 호출 완료: " + geminiResponse); // 로그 추가
-            chatHistory.add(Map.of("sender", "bot", "message", geminiResponse));
-            response.put("response", geminiResponse);
+            System.out.println("Gemini API 호출 완료: " + geminiResponse);
+            return geminiResponse;
         } catch (Exception e) {
-            response.put("error", "Gemini API 호출 오류: " + e.getMessage());
+            return "Gemini API 호출 오류: " + e.getMessage();
         }
-        return response;
     }
+
     @PostMapping("/chat/recipe")
     public String recommendRecipe(@RequestParam("ingredients") String ingredients, Model model){
         String geminiResponse = chatService.recommendRecipePrompt(ingredients);

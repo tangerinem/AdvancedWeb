@@ -6,88 +6,88 @@
     <title>레시피 추천 받기</title>
     <style>
         html, body {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          font-family: sans-serif;
-          background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            height: 93%;
+            font-family: sans-serif;
+            background-color: #f5f5f5;
         }
 
         .chat-container {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .chat-inner {
-          flex-grow: 1;
-          display: flex;
-          justify-content: center;
-          overflow-y: auto;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            overflow-y: auto;
         }
 
         .message-box {
-          width: 100%;
-          max-width: 800px;
-          padding: 50px 8px;
-          display: flex;
-          flex-direction: column;
-          gap: 30px;
+            width: 100%;
+            max-width: 800px;
+            padding: 50px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         .user-message, .bot-message {
-          padding: 14px 18px;
-          border-radius: 16px;
-          max-width: 80%;
-          word-break: break-word;
+            padding: 14px 18px;
+            border-radius: 16px;
+            max-width: 80%;
+            word-break: break-word;
         }
 
         .user-message {
-          align-self: flex-end;
-          background-color: #FFB18A;
+            align-self: flex-end;
+            background-color: #FFB18A;
         }
 
         .bot-message {
-          align-self: flex-start;
-          background-color: #ffffff;
-          border: 1px solid #ddd;
+            align-self: flex-start;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
         }
 
         .input-area {
-          display: flex;
-          justify-content: center;
-          padding: 12px 16px;
-          border-top: 1px solid #ccc;
-          background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            padding: 12px 16px;
+            border-top: 1px solid #ccc;
+            background-color: #fafafa;
         }
 
         .input-wrapper {
-          display: flex;
-          width: 100%;
-          max-width: 800px;
+            display: flex;
+            width: 100%;
+            max-width: 800px;
         }
 
         .input-wrapper input[type="text"] {
-          flex-grow: 1;
-          padding: 12px;
-          font-size: 16px;
-          border: 1px solid #ccc;
-          border-radius: 8px 0 0 8px;
-          background-color: #fff;
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px 0 0 8px;
+            background-color: #fff;
         }
 
         .input-wrapper button {
-          padding: 12px 18px;
-          font-size: 16px;
-          border: 1px solid #ccc;
-          border-radius: 0 8px 8px 0;
-          background-color: #FF894E;
-          color: white;
-          cursor: pointer;
+            padding: 12px 18px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 0 8px 8px 0;
+            background-color: #FF894E;
+            color: white;
+            cursor: pointer;
         }
 
         .input-wrapper button:hover {
-          background-color: #222;
+            background-color: #222;
         }
 
         .input-wrapper2 {
@@ -121,6 +121,7 @@
     </style>
 </head>
 <body>
+{{>layouts/cheader}}
 <div class="chat-container">
     <div class="chat-inner">
         <div class="message-box" id="chat-log">
@@ -130,6 +131,7 @@
         </div>
     </div>
 
+    <!-- 일반 채팅 입력 -->
     <div class="input-area">
         <div class="input-wrapper">
             <input type="text" id="user-input" placeholder="메시지를 입력하세요.." />
@@ -137,8 +139,7 @@
         </div>
     </div>
 
-
-    <!-- 빠른 레시피 추천 -->
+    <!-- 빠른 레시피 추천 입력 -->
     <div class="input-area">
         <form action="/chat/recipe" method="post" style="width: 100%; max-width: 800px;">
             <div class="input-wrapper2">
@@ -147,43 +148,37 @@
             </div>
         </form>
     </div>
-
-
 </div>
 
 <script>
     function sendMessage() {
-      const userInput = document.getElementById("user-input").value;
-      if (userInput.trim() !== "") {
-        fetch("/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: "message=" + encodeURIComponent(userInput),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.response) {
-              const chatLog = document.getElementById("chat-log");
-              chatLog.innerHTML += `<div class="user-message">${userInput}</div>`;
-              chatLog.innerHTML += `<div class="bot-message">${data.response}</div>`;
-              document.getElementById("user-input").value = "";
-              chatLog.scrollTop = chatLog.scrollHeight;
-            } else if (data.error) {
-              alert("오류 발생: " + data.error);
-            }
-          })
-          .catch((error) => {
-            console.error("네트워크 오류:", error);
-            alert("네트워크 오류가 발생했습니다.");
-          });
-      }
+        const userInput = document.getElementById("user-input").value;
+        if (userInput.trim() !== "") {
+            fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "message=" + encodeURIComponent(userInput),
+            })
+                    .then((response) => response.text()) // 문자열로 받기
+                    .then((text) => {
+                        const chatLog = document.getElementById("chat-log");
+                        chatLog.innerHTML += `<div class="user-message">${userInput}</div>`;
+                        chatLog.innerHTML += `<div class="bot-message">${text}</div>`;
+                        document.getElementById("user-input").value = "";
+                        chatLog.scrollTop = chatLog.scrollHeight;
+                    })
+                    .catch((error) => {
+                        console.error("네트워크 오류:", error);
+                        alert("네트워크 오류가 발생했습니다.");
+                    });
+        }
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      const chatLog = document.getElementById("chat-log");
-      chatLog.scrollTop = chatLog.scrollHeight;
+        const chatLog = document.getElementById("chat-log");
+        chatLog.scrollTop = chatLog.scrollHeight;
     });
 </script>
 </body>

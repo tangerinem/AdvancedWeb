@@ -69,8 +69,8 @@ public class GeminiApiClient {
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        // 실제 API 키로 교체하세요! 환경 변수나 설정 파일에서 읽어오는 것을 권장합니다.
-        String yourApiKey = System.getenv("AIzaSyDnK_X_-QdM654U0g6Kx_7i_iI2GQmobaQ"); // 예: 환경 변수에서 읽기
+        // API 키
+        String yourApiKey = System.getenv("AIzaSyDnK_X_-QdM654U0g6Kx_7i_iI2GQmobaQ");
 
         if (yourApiKey == null || yourApiKey.isEmpty()) {
             System.err.println("GEMINI_API_KEY environment variable not set.");
