@@ -233,16 +233,23 @@
             text-align: center;
         }
     </style>
+
 </head>
 <body>
-{{>Layouts/cheader}}
-
+{{>Layouts/header}}
+<script>
+    window.onload = function() {
+        {{#expIngredient}}
+            alert("다음 재료의 유통기한이 10일 이내입니다.\n유통기한 임박 재료 : {{expIngredient}}");
+        {{/expIngredient}}
+    }
+</script>
 <div class="container">
     <div class="left-panel">
         <div class="left-panel-header">
             <h3>내 냉장고 재료</h3>
             <div class="sort-buttons">
-                <a href="ingredients?sort=latest" class="sort-button active">최신순</a>
+                <a href="ingredients?sort=latest" class="sort-button active">구입일 순</a>
                 <a href="ingredients?sort=expiryDate" class="sort-button active">유통기한 순</a>
                 <a href="/refrigerator/ingredients/add" class="add-ingredient-button">재료 추가</a>
             </div>
@@ -270,7 +277,7 @@
         <h3>냉장고 재료 기반 레시피 추천</h3>
         <div class="ingredient-tags">
             {{#ingredientList}}
-                <button class="ingredient-tag-button" data-ingredient-name="{{ingredientName}}">{{ingredientName}}</button>
+                <button class="ingredient-tag-button">{{ingredientName}}</button>
             {{/ingredientList}}
             {{^ingredientList}}
                 <p style="text-align: center; width: 100%; color: #888;">추천할 재료가 없습니다.</p>
@@ -281,3 +288,41 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btns = document.querySelectorAll(".ingredient-tag-button");
+
+        btns.forEach(btn => {
+            btn.addEventListener("click", function () {
+                const btnName = this.textContent.trim(); // 버튼 안에 표시된 텍스트
+                if (btnName !== "") {
+                    const message = btnName + ", 이 재료로 만들 수 있는 음식 레시피를 간단히 알려줘";
+                    console.log(message);
+                    fetch("/chat", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        body: "message=" + encodeURIComponent(message),
+                    })
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.response) {
+                                    const chatLog = document.getElementById("dynamic-content");
+                                    chatLog.innerHTML = `${data.response}`;
+                                    chatLog.scrollTop = chatLog.scrollHeight;
+                                } else if (data.error) {
+                                    alert("오류 발생: " + data.error);
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("네트워크 오류:", error);
+                                alert("네트워크 오류가 발생했습니다.");
+                            });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

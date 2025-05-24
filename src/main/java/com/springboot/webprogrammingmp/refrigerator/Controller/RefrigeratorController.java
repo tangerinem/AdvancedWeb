@@ -7,6 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,24 +23,39 @@ public class RefrigeratorController {
 
     @GetMapping("/ingredients")
     public String ingredientList(@RequestParam(defaultValue = "latest") String sort, Model model) {
-        List<Ingredient> ingredientList;
+        List<Ingredient> ingredientList = ingredientRepository.findAll();
+        List<String> expIngredientList = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
+        LocalDate today = LocalDate.now();
+
+        //정렬 부분
         if("expiryDate".equals(sort)){
-            ingredientList = ingredientRepository.findAll();
             ingredientList.sort(Comparator.comparing((Ingredient i) -> {
-                String exp = i.getExpiryDate();
-                return Integer.parseInt(exp.substring(0, 2));
-            }).thenComparing(i -> {
-                String exp = i.getExpiryDate();
-                return Integer.parseInt(exp.substring(3, 5));
-            }).thenComparing(i -> {
-                String exp = i.getExpiryDate();
-                return Integer.parseInt(exp.substring(6));
+                LocalDate exp = LocalDate.parse(i.getExpiryDate(), formatter);
+                return exp;
             }));
         }
         else{
-            ingredientList = ingredientRepository.findAllByOrderByCreatedAtDesc();
+            ingredientList.sort(Comparator.comparing((Ingredient i) -> {
+                LocalDate date = LocalDate.parse(i.getDate(), formatter);
+                return date;
+            }));
         }
+
+        //alert 부분
+        for(Ingredient i : ingredientList){
+            LocalDate ingredientExp = LocalDate.parse(i.getExpiryDate(), formatter);
+            if(today.plusDays(10).isAfter(ingredientExp)){
+                expIngredientList.add(i.getIngredientName());
+            }
+        }
+        if(!expIngredientList.isEmpty()){
+            String expIngredient = String.join(",", expIngredientList);
+            model.addAttribute("expIngredient", expIngredient);
+        }
+
         model.addAttribute("ingredientList", ingredientList);
+
         return "Refrigerator/main";
     }
 
