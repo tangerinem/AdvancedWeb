@@ -1,25 +1,62 @@
-/*버튼 스타일 설정 */
-
-.btn-primary {
-    background: #57C44F;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 4px;
+.community-form {
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
 }
 
-.btn-backList {
-    background: #FF894E;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 4px;
+/* label */
+.community-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
 }
 
-.btn-dark:hover {
-    background: #333;
+/* input, textarea */
+.community-form input,
+.community-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.community-form textarea {
+    resize: vertical;
+}
+
+/* 버튼 */
+.community-form .btn-submit {
+    background-color: #57C44F;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.community-form .btn-backList {
+    background-color: #FF894E;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.community-form .btn-submit:hover {
+    background-color: #45a63c;
+}
+.community-form .btn-backList:hover {
+    background-color: #e46b2e;
 }
