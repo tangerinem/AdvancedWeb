@@ -36,7 +36,7 @@ public class ChatController {
     public String handleChatMessage(@RequestParam String message) {
         try {
             System.out.println("Gemini API 호출 시작: " + message);
-            Thread.sleep(2000); // 테스트용 대기
+
             String geminiResponse = geminiApiClient.generateText(message);
             geminiResponse = geminiResponse.replaceAll("\n", "<br>");
             System.out.println("Gemini API 호출 완료: " + geminiResponse);
