@@ -36,15 +36,20 @@ public class ChatController {
     public String handleChatMessage(@RequestParam String message) {
         try {
             System.out.println("Gemini API 호출 시작: " + message);
+            chatHistory.add(Map.of("sender", "user", "message", message));
 
             String geminiResponse = geminiApiClient.generateText(message);
             geminiResponse = geminiResponse.replaceAll("\n", "<br>");
+
             System.out.println("Gemini API 호출 완료: " + geminiResponse);
+            chatHistory.add(Map.of("sender", "bot", "message", geminiResponse));
+
             return geminiResponse;
         } catch (Exception e) {
             return "Gemini API 호출 오류: " + e.getMessage();
         }
     }
+
 
     @PostMapping("/chat/recipe")
     public String recommendRecipe(@RequestParam("ingredients") String ingredients, Model model){
