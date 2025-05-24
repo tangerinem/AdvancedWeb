@@ -233,16 +233,23 @@
             text-align: center;
         }
     </style>
+
 </head>
 <body>
-{{>Layouts/cheader}}
-
+{{>Layouts/header}}
+<script>
+    window.onload = function() {
+        {{#expIngredient}}
+            alert("다음 재료의 유통기한이 10일 이내입니다.\n유통기한 임박 재료 : {{expIngredient}}");
+        {{/expIngredient}}
+    }
+</script>
 <div class="container">
     <div class="left-panel">
         <div class="left-panel-header">
             <h3>내 냉장고 재료</h3>
             <div class="sort-buttons">
-                <a href="ingredients?sort=latest" class="sort-button active">최신순</a>
+                <a href="ingredients?sort=latest" class="sort-button active">구입일 순</a>
                 <a href="ingredients?sort=expiryDate" class="sort-button active">유통기한 순</a>
                 <a href="/refrigerator/ingredients/add" class="add-ingredient-button">재료 추가</a>
             </div>

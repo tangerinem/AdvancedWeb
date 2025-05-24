@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
-
 @Entity @ToString @Slf4j @NoArgsConstructor @AllArgsConstructor @Getter
 public class Ingredient {
 
@@ -20,13 +18,6 @@ public class Ingredient {
     private String date;
     private String expiryDate;
     private String memo;
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
-
 
 
     public Ingredient(String ingredientName, int quantity, String date, String expiryDate, String memo) {
