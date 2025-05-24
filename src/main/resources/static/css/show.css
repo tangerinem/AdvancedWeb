@@ -53,6 +53,6 @@ p {
 }
 
 .button-group-right {
-    text-align: right;  /* 오른쪽 정렬 핵심 */
-    padding: 20px 40px; /* 좌우 간격 맞춰주면 예쁨 */
+    text-align: right;
+    padding: 20px 40px;
 }

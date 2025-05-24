@@ -128,7 +128,7 @@ section.notice {
     transition: all 0.3s;
 }
 
-/* 버튼 스타일 */
+/* 버튼 스타일 - 검색 */
 .btn-dark {
     background: #FF894E;
     color: #fff;
@@ -141,8 +141,29 @@ section.notice {
 }
 
 .btn-dark {
-    background: #FF894E;
-    color: #fff;
+    background-color: #FF894E;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.mt-3.text-end {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.btn-darkNew {
+    background-color: #FF894E;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    justify-items: flex-end;
 }
 
 .btn-dark:hover, .btn-dark:focus {
