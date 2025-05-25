@@ -39,9 +39,13 @@ public class CommunityController {
     }
 
     @PostMapping("/community/create")
-    public String newPost(@ModelAttribute CommunityForm form) {
+    public String newPost(@ModelAttribute CommunityForm form, Community createCommunity) {
+        /* 줄바꿈 해결 */
+        String lineContent = createCommunity.getContent().replace("\n", "<br>");
         Community community = form.toEntity();
         community.setDate(LocalDate.now());
+        community.setContent(lineContent);
+
         communityRepository.save(community);
         return "redirect:/community";
     }
@@ -60,8 +64,12 @@ public class CommunityController {
     public String updatePost(@PathVariable("id") Long id, @ModelAttribute Community updatedCommunity){
         Community target = communityRepository.findById(id).orElse(null);
 
+        /* 줄바꿈 해결 */
+        String lineContent = updatedCommunity.getContent().replace("\n", "<br>");
+
         target.setTitle(updatedCommunity.getTitle());
         target.setContent(updatedCommunity.getContent());
+        target.setContent(lineContent);
 
         communityRepository.save(target);
         return "redirect:/community/" + id;
