@@ -301,24 +301,26 @@
                     fetch("/chat", {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/x-www-form-urlencoded",
+                            "Content-Type": "application/x-www-form-urlencoded"
                         },
-                        body: "message=" + encodeURIComponent(message),
+                        body: "message=" + encodeURIComponent(message)
                     })
-                            .then((response) => response.json())
-                            .then((data) => {
-                                if (data.response) {
-                                    const chatLog = document.getElementById("dynamic-content");
-                                    chatLog.innerHTML = `${data.response}`;
-                                    chatLog.scrollTop = chatLog.scrollHeight;
-                                } else if (data.error) {
-                                    alert("오류 발생: " + data.error);
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error("HTTP error! status: " + response.status);
                                 }
+                                return response.text();
                             })
-                            .catch((error) => {
-                                console.error("네트워크 오류:", error);
-                                alert("네트워크 오류가 발생했습니다.");
+                            .then(data => {
+                                const chatLog = document.getElementById("dynamic-content");
+                                chatLog.innerHTML = data;  
+                            })
+                            .catch(error => {
+                                console.error("Error:", error);
+                                const chatLog = document.getElementById("dynamic-content");
+                                chatLog.textContent = "오류가 발생했습니다. 다시 시도해주세요.";
                             });
+
                 }
             });
         });
