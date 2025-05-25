@@ -1,9 +1,6 @@
 package com.springboot.webprogrammingmp.community.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -25,7 +22,10 @@ public class Community {
 
     private String comment;
 
+    @Lob
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
+
     private String query;
 
 
