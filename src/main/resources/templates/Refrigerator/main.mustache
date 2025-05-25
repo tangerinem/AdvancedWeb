@@ -296,9 +296,8 @@
             btn.addEventListener("click", function () {
                 const btnName = this.textContent.trim(); // 버튼 안에 표시된 텍스트
                 if (btnName !== "") {
-                    const message = btnName + ", 이 재료로 만들 수 있는 음식 레시피를 간단히 알려줘";
-                    console.log(message);
-                    fetch("/chat", {
+                    const message = btnName + ", 이 재료로 만들 수 있는 음식 레시피 3가지 알려줘";
+                    fetch("/refrigerator/chat", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded"
@@ -311,16 +310,15 @@
                                 }
                                 return response.text();
                             })
-                            .then(data => {
+                            .then(response => {
                                 const chatLog = document.getElementById("dynamic-content");
-                                chatLog.innerHTML = data;  
+                                chatLog.innerHTML = response;
                             })
                             .catch(error => {
                                 console.error("Error:", error);
                                 const chatLog = document.getElementById("dynamic-content");
                                 chatLog.textContent = "오류가 발생했습니다. 다시 시도해주세요.";
                             });
-
                 }
             });
         });

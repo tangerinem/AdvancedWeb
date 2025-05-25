@@ -1,5 +1,6 @@
 package com.springboot.webprogrammingmp.refrigerator.Controller;
 
+import com.springboot.webprogrammingmp.api.GeminiApiClient;
 import com.springboot.webprogrammingmp.refrigerator.DTO.IngredientForm;
 import com.springboot.webprogrammingmp.refrigerator.Entity.Ingredient;
 import com.springboot.webprogrammingmp.refrigerator.Repository.IngredientRepository;
@@ -18,8 +19,12 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/refrigerator")
 public class RefrigeratorController {
+    private final GeminiApiClient apiClient;
     private final IngredientRepository ingredientRepository;
-    public RefrigeratorController(IngredientRepository ingredientRepository) {this.ingredientRepository = ingredientRepository;}
+    public RefrigeratorController(IngredientRepository ingredientRepository, GeminiApiClient apiClient) {
+        this.ingredientRepository = ingredientRepository;
+        this.apiClient = apiClient;
+    }
 
     @GetMapping("/ingredients")
     public String ingredientList(@RequestParam(defaultValue = "latest") String sort, Model model) {
@@ -101,5 +106,21 @@ public class RefrigeratorController {
             ingredientRepository.deleteById(id);
         }
         return "redirect:/refrigerator/ingredients";
+    }
+    @PostMapping("/chat")
+    @ResponseBody
+    public String handleChatMessage(@RequestParam String message) {
+        try {
+            System.out.println("Gemini API 호출 시작: " + message);
+
+            String geminiResponse = apiClient.generateText(message);
+            geminiResponse = geminiResponse.replaceAll("\n", "<br>");
+
+            System.out.println("Gemini API 호출 완료: " + geminiResponse);
+
+            return geminiResponse;
+        } catch (Exception e) {
+            return "Gemini API 호출 오류: " + e.getMessage();
+        }
     }
 }
