@@ -22,6 +22,7 @@ public class Community {
 
     private String comment;
 
+    /* ALTER TABLE community MODIFY COLUMN content TEXT; db에 명시 필수 */
     @Lob
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
