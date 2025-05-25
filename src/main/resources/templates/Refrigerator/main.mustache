@@ -296,7 +296,7 @@
             btn.addEventListener("click", function () {
                 const btnName = this.textContent.trim(); // 버튼 안에 표시된 텍스트
                 if (btnName !== "") {
-                    const message = btnName + ", 이 재료로 만들 수 있는 음식 레시피 3가지 알려줘";
+                    const message = btnName + " 이걸 가지고 만들 수 있는 음식 레시피 3가지 알려줘";
                     fetch("/refrigerator/chat", {
                         method: "POST",
                         headers: {
